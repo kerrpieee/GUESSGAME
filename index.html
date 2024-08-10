@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>猜數字挑戰</title>
+    <style>
+        body {
+            background-color: rgb(124, 172, 124);
+            text-align: center;
+        }
+
+        #result {
+            background-color: bisque;
+            width: 300px;
+            padding: 80px 0;
+            margin: 12px auto;
+            border-radius: 12px;
+            border: 1px black solid;
+            text-align: center;
+        }
+
+        .tips {
+            display: inline-block;
+            background-color: darkred;
+            color: white;
+            padding: 3px 6px;
+        }
+
+        #restart {
+            border: 0px;
+            background-color: rgb(214, 211, 203);
+            color: black;
+            padding: 4px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <img height="150px" src="images/images.png" alt="">
+    <h1>猜數字挑戰賽!</h1>
+    <div class="tips">遊戲說明:</div>
+    <br>
+    <p>請猜1~50之間的數字，遊戲共有五次機會。</p>
+    <br>
+    <label for="number">請猜一個數字</label>
+    <input type="number" id="number">
+    <button id="answer" onclick="answer()"> 送出 </button>
+    <div id="result">
+    </div>
+    <button id="restart">重新開始</button>
+    <h3 id="guessCount"></h3>
+    <hr>
+    <div style="background-color: cornflowerblue;color: white;padding: 2px 0px;">
+        <p id="records">遊戲紀錄:</p>
+        <script>
+
+            function showRecords() {
+                recordsE1.innerHTML = "";
+                for (let i = 0; i < records.length; i++) {
+                    recordsE1.innerHTML += `
+                <hr>
+                <div>時間:${records[i][0]}<br>
+                    遊戲結果:${records[i][1]}<br>
+                    次數:${records[i][2]}
+                </div>
+                `;
+                }
+            }
+
+            function answer() {
+                if (count == maxCount) {
+
+                    return;
+                }
+
+                let number = numberE1.value;
+
+                //數字不能為空
+                if (number == "") {
+                    resultE1.innerHTML = "輸入不能為空";
+                    return;
+                }
+                //輸入要在1~50之間
+                if (number < 1 || number > 50) {
+                    resultE1.innerHTML = "輸入要在1~50之間";
+                    return;
+                }
+
+                //進行累加
+                count++;
+
+
+                if (number == computer) {
+                    resultE1.innerHTML = "猜對了!";
+                    restartE1.disabled = false;
+                    records.push([new Data().toLocaleString(), "猜對了!", count]);
+                    showRecords()
+
+                } else {
+
+                    //猜錯次數進行提示
+                    guessCountE1.innerHTML = `猜錯${count}次!`;
+
+                    //五次後結束遊戲(提示正確答案)
+                    if (count == 5) {
+                        resultE1.innerHTML = `遊戲結束<br>答案為:${computer}`;
+                        resultE1.innerHTML = "請重新開始遊戲!";
+                        restartE1.disabled = false;
+                        showRecords()
+                    }
+
+
+                    if (number > computer) {
+                        resultE1.innerHTML = "猜低一點!";
+                    } else {
+                        resultE1.innerHTML = "猜高一點!";
+                    }
+                }
+            }
+
+            const numberE1 = document.querySelector("#number");
+            const answerBtnE1 = document.querySelector("#answer");
+            const resultE1 = document.querySelector("#result");
+            const guessCountE1 = document.querySelector("#guessCount");
+            const restartE1 = document.querySelector("#restart");
+            const recordsE1 = document.querySelector("#records");
+
+            restartE1.disabled = true;
+
+            restartE1.addEventListener("click", () => {
+                count = 0;
+                resultE1.innerHTML = "";
+                guessCountE1.innerHTML = "";
+                numberE1.value = "";
+            });
+
+
+            let maxCount = 5;
+            let count = 0;
+            let computer = getRandomInt(1, 50);
+
+            console.log(resultE1, numberE1, answerBtnE1, restartE1);
+
+            //遊玩時間
+            //猜對次數
+            //猜錯次數
+
+            let records = [];
+
+            console.log(new Data().toLocaleString());
+
+            //records.push(["2024/8/10 16:00:00", '答對了', "3次"]);
+            //records.push(["2024/8/10 16:00:00", '答對了', "5次"]);
+            //records.push(["2024/8/10 16:00:00", '答對了', "5次"]);
+            //records.push(["2024/8/10 16:00:00", '答對了', "5次"]);
+
+            //console.log(records);
+            //console.log(records.length);
+
+            for (let i = 0; i < records.length; i++) {
+                console.log(records[i][0])
+            }
+
+
+
+            let x = 6.8;
+            console.log(x, Math.floor(x), Math.ceil(x));
+
+            console.log(Math.floor(Math.random() * 10) + 1);
+
+            console.log("------------------------------------")
+
+            for (let i = 0; i < 10; i++) {
+                console.log(getRandomInt(0, 3));
+            }
+
+
+            function getRandomInt(start, end) {
+                return Math.floor(Math.random() * (end - start + 1)) + start;
+            }
+
+
+
+        </script>
+</body>
+
+</html>
