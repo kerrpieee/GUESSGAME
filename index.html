@@ -105,13 +105,13 @@
                     guessCountE1.innerHTML = `猜錯${count}次!`;
 
                     //五次後結束遊戲(提示正確答案)
-                    if (count == 5) {
+                    if (count == maxCount) {
                         resultE1.innerHTML = `遊戲結束<br>答案為:${computer}`;
-                        resultE1.innerHTML = "請重新開始遊戲!";
+                        resultE1.innerHTML += "<br>請重新開始遊戲!";
                         restartE1.disabled = false;
+                        records.push([new Date().toLocaleString(), "猜錯了", count]);
                         showRecords()
                     }
-
 
                     if (number > computer) {
                         resultE1.innerHTML = "猜低一點!";
